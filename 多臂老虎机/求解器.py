@@ -40,7 +40,7 @@ def plot_results(solvers, solver_name):
 # 贪婪算法
 
 class EpsilonGreed(solver):
-    def __init__(self, bandit: BernoulliBandit, epsilon=0.01, init_probs=1):
+    def __init__(self, bandit: BernoulliBandit, epsilon=0.01, init_probs=1.):
         super(EpsilonGreed, self).__init__(bandit)
         self.epsilon = epsilon
         self.estimates = np.array([init_probs] * self.bandit.k)
@@ -50,8 +50,9 @@ class EpsilonGreed(solver):
             k = np.random.randint(0, self.bandit.k)
         else:
             k = np.argmax(self.estimates)
-        r = self.bandit.step(k)
+        r = self.bandit.step(k) # 返回是赢还是输，1是赢
         self.estimates[k] += 1. / (self.counts[k] + 1) * (r - self.estimates[k])
+        print(self.estimates[k])
         return k
 
 
