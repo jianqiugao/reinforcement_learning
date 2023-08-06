@@ -12,7 +12,8 @@ a2, b2 = 4, 12 # 正偏态分布
 a3, b3 = 12, 4 # 负偏态分布
 a4, b4 = 2, 2 # 对称分布
 a5, b5 = 5, 5 # 双峰分布
-res = np.random.beta(a2,b2)
+res = np.random.beta(a2,b2) # 每次都不一样
+print(res)
 # 计算不同参数下的概率密度函数值
 y1 = beta.pdf(x, a1, b1)
 y2 = beta.pdf(x, a2, b2)
