@@ -43,16 +43,15 @@ class EpsilonGreed(solver):
     def __init__(self, bandit: BernoulliBandit, epsilon=0.01, init_probs=1.):
         super(EpsilonGreed, self).__init__(bandit)
         self.epsilon = epsilon
-        self.estimates = np.array([init_probs] * self.bandit.k)
+        self.estimates = np.array([init_probs] * self.bandit.k) # 得奖的概率，初始时刻均为1
 
     def run_one_step(self):
-        if np.random.random() < self.epsilon:
-            k = np.random.randint(0, self.bandit.k)
+        if np.random.random() < self.epsilon: # 当小于这个概率的时候
+            k = np.random.randint(0, self.bandit.k) # 随机选择一个机器
         else:
-            k = np.argmax(self.estimates)
+            k = np.argmax(self.estimates) # 否则就选取最大概率的机器
         r = self.bandit.step(k) # 返回是赢还是输，1是赢
-        self.estimates[k] += 1. / (self.counts[k] + 1) * (r - self.estimates[k])
-        print(self.estimates[k])
+        self.estimates[k] += 1. / (self.counts[k] + 1) * (r - self.estimates[k]) # 每一次选取后重新计算赢球的概率
         return k
 
 
